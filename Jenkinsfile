@@ -21,12 +21,6 @@ pipeline {
         }
     }
     stage('docker build') {
-        agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
-            }
         steps {
             sh 'docker build -t learn-jenkins-app .'
         }
