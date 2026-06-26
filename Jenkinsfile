@@ -43,11 +43,9 @@ pipeline {
             }
             environment {
                 AWS_S3_BUCKET_NAME = 'lern-jenkins-app20260726'
-                AWS_ACCESS_KEY_ID = credentials('aws-key').username
-                AWS_SECRET_ACCESS_KEY = credentials('aws-key').password
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'aws-credentials', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                withCredentials([usernamePassword(credentialsId: 'aws-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                     sh '''
                         aws --version
                         echo "Deploying to AWS S3"
