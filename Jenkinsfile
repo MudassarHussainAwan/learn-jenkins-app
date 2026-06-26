@@ -2,10 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('build') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
             steps {
-                echo 'Hello World'
+                sh '''
+                    node --version
+                    npm --version
+
+                    npm ci
+                    npm run build
+                    ls -al
+                '''
             }
         }
     }
+    stage('docker build') {
+        steps {
+            sh 'docker build -t learn-jenkins-app .'
+        }
+    }
+
 }
